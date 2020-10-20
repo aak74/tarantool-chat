@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  tarantool:
+    build: containers/tarantool
+    environment:
+      TARANTOOL_USER_NAME: chat
+      TARANTOOL_USER_PASSWORD: Wk9da78DzJU8YNZY
+    command: ["tarantool", "server.lua"]
+    volumes:
+      # - ./data/tarantool:/var/lib/tarantool
+      - ./src/tarantool:/opt/tarantool
+
+  nginx:
+    build: containers/nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./src/front:/usr/share/nginx/html
+      - ./tmp/nginx:/var/log/nginx
